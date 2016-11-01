@@ -13,15 +13,18 @@ function Vehicle(name, numberOfWheels, speed, numberOfPassengers=0){
     }
 }
 
-Vehicle.prototype.move = function(){
-    this.updateDistanceTraveled()
-    this.makeNoise()
-    return this
+Vehicle.prototype = {
+    move: function(){
+        this.updateDistanceTraveled()
+        this.makeNoise()
+        return this
+    },
+    makeNoise: function(){
+        console.log("vroom")
+        return this
+    }
 }
-Vehicle.prototype.makeNoise= function(){
-    console.log("vroom")
-    return this
-}
+
 
 
 bike = new Vehicle("bike",2,2)
