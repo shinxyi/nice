@@ -23,4 +23,4 @@ NOTE: If you don't get in at least one pull request daily, then *_ya ain't serio
 
 ## Videos
 
-* [ToCome](https://youtube.com) - ...
+* [Express](https://youtu.be/QM63QDFScIs)
