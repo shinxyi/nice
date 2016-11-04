@@ -15,18 +15,6 @@ app.get('/', function(request, response) {
 	response.render('index');
 });
 
-app.post('/submit_survey', function(request, response) {
-	// store form data
-	var result = {
-		name: request.body.name,
-		location: request.body.location,
-		language: request.body.language,
-		comment: request.body.comment
-	};
-	
-	response.render('result', {result: result});
-});
-
 var server = app.listen(8000, function() {
 	console.log('listening on port 8000');
 });
