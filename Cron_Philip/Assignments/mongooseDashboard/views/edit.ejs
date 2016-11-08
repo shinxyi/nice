@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-md-6">
+        <h3>Edit <%= owl.name%></h3>
+        <form action="/owls/<%=owl.id%>" method="POST">
+          <div class="form-group">
+            <label>Name:</label> 
+            <input class="form-control" type="text" name="name" value="<%= owl.name%>">
+          </div>
+          <div class="form-group">
+            <label>Age:</label>
+            <input class="form-control" type="text" name="age" value="<%= owl.age%>">
+          </div>
+            <input class="btn btn-success" type="submit" name="submit" value="Update">
+            <a class="btn btn-primary" href="/" type="button">Home</a>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
