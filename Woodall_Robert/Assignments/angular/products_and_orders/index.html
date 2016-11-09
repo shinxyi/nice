@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Products with a Factory</title>
+	
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<!-- angular -->
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script>
+		var app = angular.module('app', []);
+		
+		app.factory('productFactory', function() {
+			var products = [{name: 'Sample', price: 10, qty: 5}];
+			
+			var factory = {};
+			factory.getProducts = function(callback) {
+				callback(products);	
+			};
+			
+			factory.addProduct = function(product) {
+				product.qty = 5; // default all products to same qty
+				products.push(product);
+			}
+			
+			factory.deleteProduct = function(index) {
+				products.splice(index, 1);
+			}
+			
+			factory.decrementQty = function(index) {
+				products[index].qty = ((products[index].qty - 1) < 0) ? 0 : products[index].qty - 1;
+			}
+			
+			return factory;
+		});
+		
+		app.controller('productController', ['productFactory', function(productFactory) {
+			var self = this;
+			self.products = [];
+			
+			productFactory.getProducts(function(data) {
+				self.products = data;
+			});
+			
+			self.addProduct = function() {
+				productFactory.addProduct(self.newProduct);
+				self.newProduct = {};
+			};
+			
+			self.deleteProduct = function(index) {
+				productFactory.deleteProduct(index);
+			};
+		}]);
+		
+		app.controller('inventoryController', ['productFactory', function(productFactory) {
+			var self = this;
+			self.items = [];
+			
+			productFactory.getProducts(function(data) {
+				self.items = data;
+			});
+			
+			self.buyItem = function(index) {
+				productFactory.decrementQty(index);
+			};
+		}]);
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Products Controller
+			</div>
+			<div class="panel-body" ng-controller="productController as productCtrl">
+				<div class="row">
+					<div class="col-md-4">
+						<form ng-submit="productCtrl.addProduct()">
+							<div class="form-group">
+								<label>Product Name:</label>
+								<input class="form-control" type="text" name="name" ng-model="productCtrl.newProduct.name">
+							</div>
+							<div class="form-group">
+								<label>Product Price:</label>
+								<input class="form-control" type="text" name="price" ng-model="productCtrl.newProduct.price">
+							</div>
+							<input type="submit" value="Add Product">
+						</form>
+					</div>
+					
+					<div class="col-md-8">
+						<!-- space filler -->
+					</div>
+				</div>
+				
+				<hr>
+				
+				<table class="table table-bordered table-striped">
+					<thead>
+						<th>Name</th>
+						<th>Price</th>
+						<th class="text-center">Actions</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="product in productCtrl.products">
+							<td ng-bind="product.name"></td>
+							<td ng-bind="product.price | currency"></td>
+							<td class="text-center"><button class="btn btn-danger" ng-click="productCtrl.deleteProduct($index)">Delete Product</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Inventory Controller
+			</div>
+			
+			<div class="panel-body" ng-controller="inventoryController as inventoryCtrl">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Qty Available</th>
+						<th class="text-center">Actions</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in inventoryCtrl.items">
+							<td ng-bind="item.name"></td>
+							<td ng-bind="item.price | currency"></td>
+							<td ng-bind="item.qty"></td>
+							<td class="text-center">
+								<button class="btn btn-warning" ng-show="item.qty > 0" ng-click="inventoryCtrl.buyItem($index)">Buy</button>
+								<button class="btn disabled" ng-show="item.qty <= 0">Buy</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
