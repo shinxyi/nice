@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <title>Controlling Users</title>
+    <!-- bootstrap -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- angular -->
+
+    <script src = 'bower_components/angular/angular.js'></script>
+    <script>
+
+        var app = angular.module('app', []);
+        app.controller('usersController', function() {
+
+            this.users = [];
+
+            this.createUser = function() {
+                this.users.push(this.newUser);
+                this.newUser = {};
+                console.log(this.users);
+            };
+            this.deleteUser = function(index) {
+                this.users.splice(index, 1);
+                console.log(index);
+            };
+        });
+
+    </script>
+
+</head>
+<body ng-controller="usersController as uController">
+    <div class="container">
+        <div class="">
+            <br>
+            <h3 class="text-danger">Add a new user</h3>
+            <br>
+            <form class="form-horizontal" ng-submit="uController.createUser()">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">First Name</label>
+                    <input type="text" placeholder="First Name" ng-model="uController.newUser.fname">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Last Name</label>
+                    <input type="text" placeholder="Last Name" ng-model="uController.newUser.lname">
+                </div>
+                <div class="form-group form-inline">
+                    <label class="col-md-2 control-label">Favorite Langauge</label>
+                    <input type="text" placeholder="Favorite Language" ng-model="uController.newUser.language">
+                    <button type="submit" class="btn btn-primary btn-sm">Create User</button>
+                </div>
+            </form>
+        </div>
+        <h3>Users table</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Favorite Language</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr ng-repeat="user in uController.users track by $index">
+              <td>{{user.fname}}</td>
+              <td>{{user.lname}}</td>
+              <td>{{user.language}}</td>
+              <td><a class="btn btn-danger" ng-click="uController.deleteUser($index)" role="button">Delete User</a></td>
+            </tr>
+
+          </tbody>
+        </table>
+    </div>
+</body>
+</html>
