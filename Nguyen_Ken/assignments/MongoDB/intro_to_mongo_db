@@ -1,0 +1,90 @@
+#Intro to Mongo DB assignment
+
+Open 2 bash terminals, navigate to Program files/MongoDB/Server/3.2/bin ...
+	1. ./Mongod
+	2. ./Mongo
+
+Assignment:
+
+1. use my_first_db
+
+2. db.createCollection('students')
+
+3. Each document you insert into this collection should have the following format: ({name: STRING, home_state: STRING, lucky_number: NUMBER, birthday: {month: NUMBER, day: NUMBER, year: NUMBER}})
+
+4. for (var i=1; i<6; i++){db.students.insert({name: "kid "+i, home_state: "TX", lucky_number: i, birthday: {month: i*2, day: i*1.3, year: 2010+i}})};
+
+5. db.students.find().pretty()
+
+6. db.students.find({home_state: {$in: ["California", "Washington"]}}).pretty();
+
+<or> db.students.find({$or: [{home_state: "California"}, {home_state: "Washington"}] }).pretty();
+
+7. 
+	1. db.students.find({lucky_number: {$gt: 3}}).pretty();
+	2. db.students.find({lucky_number: {$lte: 10}}).pretty();
+	3. db.students.find({lucky_number: {$gte: 1, $lte: 9}}).pretty();
+
+8. db.students.update({}, {$set: {interests: ["coding", "brunch", "MongoDB"]}}, false, true);
+
+9.
+	1. db.students.update({name: "kid1"}, {$push: {interests: "bowling"}});
+	2. db.students.update({name: "kid2"}, {$push: {interests: {$each: ["eating", "sleeping"]}}});
+	3. db.students.update({name: "kid3"}, {$push: {interests: {$each: ["rock climbing", "tap dancing"]}}});
+	4. db.students.update({name: "kid4"}, {$push: {interests: {$each: ["slapping", "snap peas", "wheat"]}}});
+	5. db.students.update({name: "kid5"}, {$push: {interests: {$each: ["voting", "witch hunting", "rabbling"]}}});
+	6. db.students.update({name: "ken"}, {$push: {interests: {$each: ["dancing", "breaking", "breakdancing"]}}});
+	7. db.students.update({name: "johnson"}, {$push: {interests: {$each: ["playing games", "football", "walking on the beach"]}}});
+
+
+10. db.students.update({name: "ken"}, {$push: {interests: "taxes"}});
+
+11. db.students.update({name: "ken"}, {$pull: {interests: "taxes"}});
+
+12. db.students.remove({home_state: {$in: ["California", "Washington"]}});
+	<instructions unclear> 
+	or 
+	db.students.remove({$or: [{home_state: "California"}, {home_state: "Washington"}] });
+
+	// edit: well, not sure if I was meant to remove one, or both. Both of these commands removed both anyway, they do not function like logical OR || 
+
+13. db.students.remove({name: "kid5"});
+
+14. db.students.remove({lucky_number: {$gt: 5}}, true);
+
+15. db.students.update({}, {$set: {number_of_belts: 0}}, {multi: true});
+
+16. db.students.update({home_state: "Washington"}, {$inc: {number_of_belts: 1}}, {multi: true});
+
+17. db.students.update({}, {$rename: {number_of_belts: "belts_earned"}}, {multi: true});
+
+18. db.students.update({}, {$unset: {lucky_number: ""}}, {multi: true});
+
+19. db.students.update({}, {$currentDate: {updated_on: true}}, {multi: true});
+
+random: db.students.update({}, {$set: {some_date: Date()}}, {multi: true});
+
+
+// the questions:
+		1. Create a database called 'my_first_db'.
+		2. Create students collection.
+		3. Each document you insert into this collection should have the following format: ({name: STRING, home_state: STRING, lucky_number: NUMBER, birthday: {month: NUMBER, day: NUMBER, year: NUMBER}})
+		4. Create 5 students with the appropriate info.
+		5. Get all students.
+		6. Retrieve all students who are from California (San Jose Dojo) or Washington (Seattle Dojo).
+		7. Get all students whose lucky number is:
+			1. greater than 3
+			2. less than or equal to 10
+			3. between 1 and 9 (inclusive)
+		8. Add a field to each student collection called 'interests' that is an ARRAY.  It should contain the following entries: 'coding', 'brunch', 'MongoDB'. Do this in ONE operation.
+		9. Add some unique interests for each particular students into each of their interest arrays.
+		10. Add the interest 'taxes' into someone's interest array.
+		11. Remove the 'taxes' interest you just added.
+		12. Remove all students who are from California (or Washington).
+		13. Remove a user by name. 
+		14. Remove a student whose lucky number is greater than 5 (JUST ONE)
+		15. Add a field to each student collection called 'number_of_belts' and set it to 0.
+		16. Increment this field by 1 for all students in Washington (Seattle Dojo).
+		17. Rename the 'number_of_belts' field to 'belts_earned'
+		18. Remove the 'lucky_number' field.
+		19. Add a 'updated_on' field, and set the value as the current date.
