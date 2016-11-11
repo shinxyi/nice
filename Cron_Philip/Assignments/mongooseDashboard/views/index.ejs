@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intro to Mongoose</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h3>Add a new Guardian:</h3>
+        <form id="form" action="/owls" method="POST">
+            <div class="form-group">
+              <label for="InputName1">Name:</label>
+              <input type="text" class="form-control" name="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label for="InputAge1">Age:</label>
+              <input type="number" class="form-control" name="age" placeholder="Age">
+            </div>
+            <button type="submit" class="btn btn-primary" name="button">Submit</button>
+        </form>
+        <br>
+        <h3>Guardians of the Trees</h3>
+        <div class="col-md-5">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Controls</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <%for(owl in owls){%>
+                        <tr>
+                            <td><a href="/owls/<%=owls[owl].id%>"><%=owls[owl].name%></a></td>
+                            <td><%=owls[owl].age%></td>
+                            <td><a class="btn btn-primary" href="/owls/<%=owls[owl].id%>/edit" type="button">Edit</a></td>
+                            <td><a class="btn btn-danger" href="/owls/<%=owls[owl].id%>/destroy" type="button">Delete</a></td>
+                        </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
+        <br>
+        </div>
+    </div>
+</body>
+</html>
