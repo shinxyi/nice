@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = 'app'>
+<head>
+    <meta charset="utf-8">
+    <title>First Angular Page</title>
+    <script src = 'bower_components/angular/angular.js'></script>
+    <script>
+
+    var app = angular.module('app', []);
+    app.controller('divController', ['$scope', function($scope){
+
+        $scope.myName = 'Philip Cron';
+        $scope.myFavoriteLanguage = 'Javascript';
+        $scope.myFavoriteJSLibrary = 'Angular';
+
+
+    }]);
+
+    </script>
+
+</head>
+<body>
+
+    <div ng-controller = "divController" id = 'divController'>
+        
+        <h3>Hello my name is {{ myName }}, my favorite Language is {{ myFavoriteLanguage }}, and {{ myFavoriteJSLibrary }} are all populated by the controller based on the values you initially input.</h3>
+
+    </div>
+
+
+</body>
+</html>
