@@ -1,0 +1,12 @@
+<html>
+	<head>
+		<title>Quotes Show Page</title>
+	</head>
+	<body>
+		<h1>Here are the awesome quotes!</h1>
+		<% for(var x in quotes) { %>
+			<h3>Author: <%= quotes[x].name %></h3>
+			<h3>Quote: <%= quotes[x].quote %></h3>
+		<% } %>
+	</body>
+</html>
