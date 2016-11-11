@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Controlling Users</title>
+	
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<!-- angular -->
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script>
+		angular.module('app', []).controller('usersController', function() {
+			this.users = [];
+			
+			this.createUser = function() {
+				console.log('creating user...');
+				this.users.push(this.newUser);
+				this.newUser = {};
+			};
+			
+			this.removeUser = function(index) {
+				console.log('removing', index);
+				this.users.splice(index, 1);
+			}
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-default" ng-controller="usersController as usersCtrl">
+			<div class="panel-heading">Controlling Users</div>
+			
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-4">
+						<form ng-submit="usersCtrl.createUser()">
+							<div class="form-group">
+								<label>First Name:</label>
+								<input class="form-control" type="text" name="fname" ng-model="usersCtrl.newUser.firstName">
+							</div>
+							<div class="form-group">
+								<label>Last Name:</label>
+								<input class="form-control" type="text" name="lname" ng-model="usersCtrl.newUser.lastName">
+							</div>
+							<div class="form-group">
+								<label>Favorite Language:</label>
+								<input class="form-control" type="text" name="language" ng-model="usersCtrl.newUser.favoriteLanguage">
+							</div>
+							<input type="submit" value="Create User">
+						</form>
+					</div>
+					
+					<div class="col-md-8">
+						<!-- space filler -->
+					</div>
+				</div>
+				
+				<hr>
+				
+				<table class="table table-bordered table-striped">
+					<thead>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Favorite Language</th>
+						<th class="text-center">Action(s)</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="user in usersCtrl.users track by $index">
+							<td ng-bind="user.firstName"></td>
+							<td ng-bind="user.lastName"></td>
+							<td ng-bind="user.favoriteLanguage"></td>
+							<td class="text-center"><button class="btn btn-danger" ng-click="usersCtrl.removeUser($index)">Remove</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
