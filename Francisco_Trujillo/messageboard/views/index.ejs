@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+	<meta charset="UTF-8">
+	<title>Index</title>
+</head>
+<body>
+<div class="row">
+<div class="col-md-10">
+<h1 class="text-center">The Dojo Message Board</h1>
+		<div>
+			<% if(typeof(errors)!= 'undefined'){ %>
+				<% for(var x in errors) { %>
+					<h3 class="bg-danger"><%= errors[x].message %></h3>
+				<% } %>
+			<% } %>
+		</div>
+		<div class="col-md-8">
+			<form action="/message" method="post">
+				<div class = "form-group">
+					<label for="name">Name:</label> 
+					<input type="text" name="name" class = form-control placeholder="name"/>
+				</div>
+				<div class"form-group">
+					<label for="message">Message:</label>
+					<textarea name="message" id="" cols="10" rows="10" class="form-control" placeholder="message"></textarea>
+				</div>
+				<button type="submit" class="btn btn-info btn-sm">Add Message</button>
+			</form>
+		</div>
+		<div class = "col-md-8">
+		<% for(var i = 0; i< messages.length; i++){ %>
+			<h3>Name: <%= messages[i].name %></h3>
+			<h3>Comments: <%= messages[i].message %></h3>
+	
+				<% for(var j = messages[i].comments.length-1; j>=0; j-- ) {%>
+					<h5>Name: <%= messages[i].comments[j].name %></h5>
+					<h5>Comment: <%= messages[i].comments[j].comment %></h5>
+			
+			<% } %>
+			<form action="/message/<%= messages[i]._id %>" method="post">
+			<div class = "form-group">
+					<label for="name">Name:</label> 
+					<input type="text" name="name" class = form-control placeholder="name"/>
+				</div>
+				<div class"form-group">
+					<label for="quote">Comment:</label>
+					<textarea name="comment" id="" cols="10" rows="10" class="form-control" placeholder="comment"></textarea>
+				</div>
+				<button type="submit" class="btn btn-warning btn-sm">Add Comments</button>
+				
+			</form>
+		<% } %>
+		</div>
+		
+	</div>
+</div>
+	
+</body>
+</html>
