@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>String Decode</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  //Given an encoded string, decode and return it.
+  //Given "a3b2c1d3", return "aaabbcddd"
+
+  $(document).ready(function(){
+    function stringDecode(str){
+      var newStr="";
+      var numbers={"0":"", "1":"", "2":"", "3":"", "4":"", "5": "", "6": "", "7": "", "8":"", "9":""};
+      var num="";
+      for (var i=0;i<str.length;i++){
+        if(numbers.hasOwnProperty(str[i])){
+          num+=str[i];
+        }else if(num!=""){
+          var length= num.length+1;
+          num*=1;
+          for(var x=0;x<num;x++){
+            newStr+=str[i-length];
+          }
+          num="";
+        }
+      }
+      if(num!=""){
+        var length= num.length+1;
+        num*=1;
+        for(var x=0;x<num;x++){
+          newStr+=str[str.length-length];
+        }
+      }
+      console.log(num);
+      return newStr;
+    }
+    //Test case below:
+    console.log(stringDecode("a3b2c1d3"));
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>

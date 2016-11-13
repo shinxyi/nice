@@ -1,0 +1,71 @@
+<html>
+<head>
+  <title>Shorter</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  //Given string and desired length, return a mximally readable stirng of that length using this process:
+  //0)Remove any leading or trailing spaces (or conversely, pad on both sides out to the desired length),
+  //1)Captialize each word before removing spaces between words (starting from the back),
+  //2)Remove punctuation, starting from the back,
+  //3)Remove lower-case letters (vowels first), from teh back,
+  //4)Remove upper-case letters, from the back.
+
+  //Given a string "It's a wonderful life, Beth! ", desired outputs for the following lengths are:
+  //33 "  It's a wonderful life, Beth!   "
+  //26 "Its A WonderfulLife,Beth!"
+  //22 "It'sAWonderfulLifeBeth"
+  //17 "ItsAWonderflLfBth"
+  //12 "ItsAWndrflLB"
+  //3 "IAW"
+
+  $(document).ready(function(){
+    function regex (str) {
+      //this regex removes all punctuation from the string
+      return str.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,"")
+    }
+
+    function uniqueWords(str){
+      var unq={};
+      var word="";
+      str = regex(str);
+      console.log(str);
+
+      for(var i=0; i<str.length;i++){
+        if(str[i]==" "){
+          if(!unq.hasOwnProperty(word)){
+            console.log(unq);
+            unq[word]="";
+            word="";
+          }else{
+            unq[word]=1;
+            word="";
+          }
+        }else{
+            word+=str[i].toLowerCase();
+        }
+      }
+      if(!unq.hasOwnProperty(word)){
+        unq[word]="";
+      }
+      var newStr="";
+      for(var i in unq){
+        if(unq[i]!=1){
+          newStr+=i;
+          newStr+=" ";
+        }
+      }
+      return newStr;
+    }
+    //Test case below:
+    console.log(uniqueWords("Sing! Sing a song; sing out loud; sing out strong."));
+
+  });
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

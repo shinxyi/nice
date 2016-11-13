@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>Unique Letters</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  //Return only the unique chars from a given string. Specifically, omit ALL
+  //instences of a (case-sensitive) character if it appears more than once, respecting spaces and punctuation.
+  // Given "Snap! Crackle! Poop!", return "SnCrcklePp"
+
+  $(document).ready(function(){
+    function uniqLetters(str){
+      var uniq = {};
+      var result= '';
+      for(var i in str){
+        if(!(uniq.hasOwnProperty(str[i]))){
+          uniq[str[i]] = str[i];
+          console.log(uniq);
+        }else{
+          uniq[str[i]]= 1;
+        }
+      }
+      //toString
+      for(var index in uniq){
+        if (uniq[index] !=1){
+          result += uniq[index];
+        }
+      }
+
+      return result;
+    }
+    //Test case below:
+    console.log(uniqLetters("Snap! Crackle! Poop!"));
+  });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
