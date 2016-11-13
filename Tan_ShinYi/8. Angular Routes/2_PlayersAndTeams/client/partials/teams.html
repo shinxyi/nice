@@ -1,0 +1,23 @@
+<h2>Teams</h2>
+<form class="form-inline" ng-submit= 'add()'>
+  <div class="form-group">
+   Name: <input type='text' ng-model='newTeam.name'>
+ </div>
+ <button type='submit' class="btn btn-default">Add Team</button>
+</form>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Team Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="team in teams track by $index">
+        <td> <a href="#/{{team}}">{{ team }}</a> </td>
+        <td><button class="btn btn-default" ng-click='delete($index)'>Remove Team</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

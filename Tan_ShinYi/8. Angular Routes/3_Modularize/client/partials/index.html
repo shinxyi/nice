@@ -1,0 +1,15 @@
+<h2>Users</h2>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in users track by $index">
+        <td> {{ user.name }} </td>
+        <td><button class="btn btn-default" ng-click='show($index)'>Edit</button></td>
+      </tr>
+    </tbody>
+  </table>

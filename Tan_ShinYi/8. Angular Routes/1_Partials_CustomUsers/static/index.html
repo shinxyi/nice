@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+ <!-- THESE TWO VERSIONS BELOW MUST MATCH (good thing bower will catch that for us, but be aware if you are using CDN's)!!! -->
+    <script src="angular/angular.js"></script>
+    <script src="angular-route/angular-route.js"></script>
+<script>
+    //  inject the ngRoute dependency in the module.
+    var myApp = angular.module('myApp', ['ngRoute']);
+    //  use the config method to set up routing:
+    myApp.config(function ($routeProvider) {
+      $routeProvider
+        .when('/',{
+            templateUrl: '/partials/userList.html',
+            controller: 'viewController'
+        })
+        .when('/partial2',{
+          templateUrl: '/partials/customizeUser.html',
+          controller: 'editController'
+        })
+        .otherwise({
+          redirectTo: '/'
+        });
+    });
+
+    myApp.factory('userFactory', function (){
+      var users = [{firstName: 'Yukihiro', lastName: 'Matsumoto', favLang: 'Ruby'},
+                   {firstName: 'Ryan', lastName: 'Dahl', favLang: 'JavaScript'}
+                  ];
+      var factory = {};
+      factory.index = function (callback){
+          callback(users);
+      }
+
+      factory.create = function(user){
+        users.push(user);
+      }
+
+      factory.show = function(callback){
+        callback(users['id']);
+      }
+
+      factory.delete = function(index){
+        users.splice(index, 1);
+      }
+
+      return factory;
+    });
+
+    //  build the controllers
+    myApp.controller('viewController', ['userFactory', '$scope', function (userFactory, $scope) {
+
+      userFactory.index(function(data){
+        $scope.users = data;
+      });
+
+    }]);
+
+    myApp.controller('editController', ['userFactory', '$scope', '$location', function (userFactory, $scope, $location) {
+
+      userFactory.index(function(data){
+        $scope.users = data;
+      });
+
+      $scope.add = function(){
+        userFactory.create($scope.newUser);
+        $scope.newUser = {};
+        $location.url('/');
+      }
+
+      $scope.delete = function(index){
+        userFactory.delete(index);
+      }
+
+
+    }]);
+    </script>
+  </head>
+  <body>
+    <div ng-app='myApp'>
+        <a href="#/">User List</a> | <a href="#/partial2">Edit Users</a>
+        <div ng-view="">
+        </div>
+    </div>
+  </body>
+</html>
