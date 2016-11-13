@@ -1,0 +1,21 @@
+
+<h2>Friends</h2>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="friend in friends track by $index">
+        <td> <a href="#/friends/{{ friend._id}}">{{ friend.name }}</a> </td>
+        <td> {{ friend.age }} </td>
+        <td>
+          <a href="#/edit/{{ friend._id}}"><button class="btn btn-default">Edit</button></a>
+          <button class="btn btn-default" ng-click="delete(friend._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
