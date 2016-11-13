@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = 'app'>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src = 'bower_components/angular/angular.js'>
+  </script>
+  <script>
+  var app = angular.module('app', []);
+  app.controller('usersController', ['$scope', function ($scope){
+    $scope.users = [];
+
+    $scope.addUser = function(){
+      $scope.newUser.date = new Date();
+      $scope.users.push($scope.newUser);
+      $scope.newUser= {};
+    }
+    $scope.removeUser = function(index){
+      $scope.users.splice(index, 1);
+    }
+
+    $scope.sorting =null;
+
+    $scope.changeSort = function(str){
+      $scope.sorting = str;
+    }
+
+
+  }]);
+  </script>
+</head>
+<body>
+  <div ng-controller='usersController'>
+    <form ng-submit= 'addUser()'>
+       First Name: <input type='text' ng-model='newUser.firstName'><br/>
+       Last Name: <input type='text' ng-model='newUser.lastName'><br/>
+       Fav Language: <input type='text' ng-model='newUser.lang'><br/>
+       <input type='submit' value='create user'>
+    </form>
+
+    <div id='info'>
+      <label> Search: <input ng-model="search.$" /></label>
+      <label> Sort by First Name: <input type="radio" name="same" ng-click="changeSort('firstName')" /></label>
+      <label> Sort by Last Name: <input type="radio" name="same" ng-click="changeSort('lastName')" /></label>
+      <label> Sort by Favorite Language: <input type="radio" name="same" ng-click="changeSort('lang')" /></label>
+      <label> Sort by Date Created: <input type="radio" name="same" ng-click="changeSort('date')" /></label>
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Fav Language</th>
+            <th>Date Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users | orderBy: sorting | filter:search track by $index">
+            <td> {{ user.firstName }} </td>
+            <td>{{ user.lastName }} </td>
+            <td>{{ user.lang }} </td>
+            <td> {{ user.date | date:'yyyy-MM-dd' }}</td>
+            <td><button ng-click='removeUser($index)'>Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = 'app'>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src = 'bower_components/angular/angular.js'>
+  </script>
+  <script>
+  var app = angular.module('app', []);
+  app.controller('myController', [function(){
+    this.food = [];
+    this.addFood = function(){
+      this.food.push(this.newFood.name);
+      this.newFood= {};
+    }
+  }]);
+  </script>
+</head>
+<body>
+    <div ng-controller = "myController as myCtrl">
+      <!-- **ng-submit -->
+      <form ng-submit="myCtrl.addFood()">
+        <label>Favorite Food</label>
+        <!-- **ng-model -->
+        <input type="text" ng-model = "myCtrl.newFood.name" />
+        <input type="submit" value="add food" />
+        <!-- **ng-click -->
+        <!-- <input type="submit" value="add food" ng-click="myCtrl.addFood()"/> -->
+      </form>
+      <!-- **ng-if -->
+      <div id ='model' ng-if = "myCtrl.newFood.name">
+        <span>
+          <!-- **ng-bind -->
+          Currently typing: <span ng-bind="myCtrl.newFood.name"></span>
+        </span>
+      </div>
+
+      <div id='list'>
+        <label> Search: <input ng-model="myCtrl.searchText" /></label>
+        <!-- **ng-init -->
+        <div ng-init='myCtrl.food = [ "pizza", "ice-cream", "pie" ]'>
+          <ul>
+            <!-- **ng-repeat / with filter-->
+            <li ng-repeat="food in myCtrl.food | filter:myCtrl.searchText"> {{ food }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id='showHide'>
+        <label>Click me: <input type="checkbox" ng-model="myCtrl.checked" /></label>
+        <!-- **ng-show -->
+        <div ng-show="myCtrl.checked"> I show up when check box is checked. </div>
+        <!-- **ng-hide -->
+        <div ng-hide="myCtrl.checked"> I hide when the checkbox is checked.</div>
+    </div>
+</body>
+</html>

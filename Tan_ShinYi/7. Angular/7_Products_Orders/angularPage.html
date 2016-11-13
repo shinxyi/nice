@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = 'app'>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src = 'bower_components/angular/angular.js'></script>
+  <script src = 'module.js'></script>
+  <script src = 'factories.js'></script>
+  <script src = 'controllers.js'></script>
+
+</head>
+<body>
+  <div ng-controller='productsController'>
+    <h2>Products Controller</h2>
+    <form ng-submit= 'add()'>
+       Product Name: <input type='text' ng-model='newProduct.name'><br/>
+       Product Price: <input type='number' ng-model='newProduct.price'><br/>
+       <input type='submit' value='Add Product'>
+    </form>
+
+    <div id='info'>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="product in products | orderBy:price track by $index">
+            <td> {{ product.name }} </td>
+            <td> {{ product.price | currency }} </td>
+            <td><button ng-click='delete($index)'>Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div ng-controller='ordersController'>
+    <h2>Orders Controller</h2>
+
+    <div id='info'>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty Available</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="product in products | orderBy:price track by $index">
+            <td> {{ product.name }} </td>
+            <td> {{ product.price | currency }} </td>
+            <td> {{ product.qty }} </td>
+            <td><button ng-click='buy($index)'>Buy</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</body>
+</html>

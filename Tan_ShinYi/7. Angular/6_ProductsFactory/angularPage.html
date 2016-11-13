@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = 'app'>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src = 'bower_components/angular/angular.js'>
+  </script>
+  <script>
+  var app = angular.module('app', []);
+
+  app.factory('productFactory', function (){
+    // The factory is nothing more than a function that returns an object
+    var products = [{name:'Keyboard', price: 149.99},{name:'Mouse', price: 59.99},{name:'Basketball', price: 21.99}];
+    var factory = {};
+    // Add a getProducts key to the factory object with a value of a function.
+    factory.index = function (callback){
+        // Pass the products to a callback to be used by whoever calls the method
+        callback(products);
+    }
+
+    factory.add = function(product){
+      products.push(product);
+    }
+
+    factory.delete = function(index){
+      products.splice(index, 1);
+    }
+
+    // Most important step: return the object so it can be used by the rest of our angular code
+    return factory;
+  });
+
+  app.controller('productsController', ['$scope', 'productFactory', function ($scope, productFactory){
+    $scope.products = [];
+
+    // run the getProducts method and set $scope data in the callback
+    productFactory.index(function (data){
+        $scope.products = data;
+    })
+
+    $scope.add = function(){
+      productFactory.add($scope.newProduct);
+      $scope.newProduct = {};
+    }
+
+    $scope.delete= function(index){
+      productFactory.delete(index);
+    }
+
+  }]);
+  </script>
+</head>
+<body>
+  <div ng-controller='productsController'>
+    <form ng-submit= 'add()'>
+       Product Name: <input type='text' ng-model='newProduct.name'><br/>
+       Product Price: <input type='number' ng-model='newProduct.price'><br/>
+       <input type='submit' value='Add Product'>
+    </form>
+
+    <div id='info'>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="product in products | orderBy:name track by $index">
+            <td> {{ product.name }} </td>
+            <td> {{ product.price | currency }} </td>
+            <td><button ng-click='delete($index)'>Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

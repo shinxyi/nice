@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title></title>
+  <script src='bower_components/angular/angular.js'></script>
+  <script type='text/javascript'>
+    var myApp = angular.module('myApp', []);
+    myApp.controller('colorsController', ['$scope', '$http', function ($scope, $http){
+      $http.get('colors.json')
+           .then(function(res){
+             console.log(res);
+             $scope.colors = res.data;
+           })
+    }])
+  </script>
+</head>
+<body ng-app='myApp'>
+    <div ng-controller='colorsController'>
+      <label>Search Colors (any field): <input ng-model="search.$"></label> <br>
+      <label>Search Name only: <input ng-model="search.name"></label><br>
+      <label>Search Hex only: <input ng-model="search.hex"></label><br>
+      <ul>
+        <li ng-repeat="color in colors | orderBy:'name' | filter:search">
+          {{ color.name }} - HEX: {{ color.hex }}, RGB: {{ color.rgb }}
+        </li>
+      </ul>
+    </div>
+</body>
+</html>
