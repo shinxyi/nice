@@ -24,3 +24,5 @@ NOTE: If you don't get in at least one pull request daily, then *_ya ain't serio
 ## Videos
 
 * [Express](https://youtu.be/QM63QDFScIs)
+* [Full Mean Overview - Part 1] https://youtu.be/ZOI_l4wmEew
+* [Full Mean Overview - Part 2] https://youtu.be/AZp7aiaLcXo
