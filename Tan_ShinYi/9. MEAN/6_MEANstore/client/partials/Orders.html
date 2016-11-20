@@ -1,0 +1,88 @@
+<h1>Orders</h1>
+<style>
+.select{
+  overflow-y: auto;
+  height: 150px;
+}
+</style>
+
+
+<div class="panel panel-default col-md-4">
+  <div class="panel-body">
+    <h3>Add a New Order</h3>
+
+    <h4>Select a customer!</h4>
+    <b>Selected Customer:</b> <span ng-if="customerSelected">{{ customerSelected.name }}</span>
+    <br/>
+    <input type="text" ng-model="customerFilter.name" placeholder="Search Customers..."/><br />
+    <br/>
+    <div class="select">
+      <p>Select a customer by clicking their name.</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr ng-repeat="customer in customers | filter:customerFilter | orderBy:name">
+            <td> <a ng-click="setCustomer(customer._id, customer.name)">{{ customer.name }}</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Select a product!</h4>
+    <b>Selected Product:</b> <span ng-if="productSelected">{{ productSelected.name }} / {{ productSelected.quantity }} left</span>
+    <br/>
+    <input type="text" ng-model="productFilter.name" placeholder="Search Products..."/><br />
+    <br/>
+
+    <div class="select">
+      <p>Select a product by clicking on it.</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr ng-repeat="product in products | filter:productFilter | orderBy:name">
+            <td> <a ng-click="setProduct(product._id, product.name, product.quantity)">{{ product.name }}</a> / ( {{ product.quantity}}  left )</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p><b>Input Quantity for Oder.</b> Cannot be less than 1 or greater than quantity left (for {{ productSelected.name }}, there are {{ productSelected.quantity }} left).</p>
+    <input type="number" ng-model="quantity" /><br/><br/>
+
+    <div ng-if="errors">
+      <ul>
+        <li ng-repeat="err in errors">{{ err }}</li>
+      </ul>
+    </div>
+    <br/>
+    <button class="btn btn-default" ng-click="setOrder()">Add Order!</button>
+
+  </div>
+</div>
+
+<div class="panel panel-default col-md-8">
+  <div class="panel-body">
+    <input type="text" ng-model="filter" placeholder="Search Orders..."/><br />
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Customer Name</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="order in orders | filter:filter | orderBy:createdAt:true" >
+          <td> {{ order.customer }} </td>
+          <td> <a href="#/show/{{order.product_id}}">{{ order.product }}</a> </td>
+          <td>{{order.quantity}}</td>
+          <td>{{ order.createdAt | date: 'longDate' }}</td>
+          <td><button ng-click="delete(order._id, order.quantity, order.product_id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+  </div>
+</div>

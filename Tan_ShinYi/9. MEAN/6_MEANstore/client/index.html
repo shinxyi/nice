@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>Full MEAN Wall</title>
+    <!-- BOWER stuff -->
+    <script src='angular/angular.js'></script>
+    <script src='angular-route/angular-route.js'></script>
+    <!-- jquery for BOOSTRAP -->
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <!-- BOOSTRAP -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!--my app stuff-->
+    <script src="assets/app.js" charset="utf-8"></script>
+    <script src='assets/factories/customersFactory.js'></script>
+    <script src='assets/factories/productsFactory.js'></script>
+    <script src='assets/factories/ordersFactory.js'></script>
+    <script src='assets/controllers/customersController.js'></script>
+    <script src='assets/controllers/productsController.js'></script>
+    <script src='assets/controllers/productController.js'></script>
+    <script src='assets/controllers/ordersController.js'></script>
+    <script src='assets/controllers/dashController.js'></script>
+
+    <!-- load momentJS (required for angular-moment) -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+
+    <!-- load angular-moment -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
+
+  </head>
+  <body>
+    <a href="#/dashboard"> Dashboard </a> |
+    <a href="#/products"> Products </a> |
+    <a href="#/orders"> Orders </a> |
+    <a href="#/customers"> Customers </a>
+
+    <div ng-view="">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<div ng-if="product">
+  <h3>Edit This Product</h3>
+  <h4> Produt ID # {{ product._id }}</h4>
+  <div ng-if="errors">
+    <ul>
+      <li ng-repeat="err in errors">{{ err }}</li>
+    </ul>
+  </div>
+  <form ng-submit= 'update()'>
+    Name:<input type='text' ng-model='info.name' /><br/>
+    Image (url):<input type='text' ng-model='info.img' placeholder='http://'/><br/>
+    Description:<textarea ng-model='info.description'></textarea><br/>
+    Initial Quantity:<input type='number' ng-model='info.quantity' /><br/>
+    <button type='submit' class="btn btn-default">Update!</button>
+  </form>
+</div>
+<div ng-if="!product">
+  <br/>
+  <h1>Sorry, the product you are searching for does not exist in database.</h1>
+</div>
