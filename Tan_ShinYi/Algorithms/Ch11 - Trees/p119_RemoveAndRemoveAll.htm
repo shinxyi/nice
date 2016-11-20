@@ -1,0 +1,128 @@
+<html>
+<head>
+  <title>Remove and Remove All</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    function BST(){
+      this.root=null;
+    }
+
+    function BTNode(val){
+      this.val=val;
+      this.left=null;
+      this.right=null;
+    }
+
+    BST.prototype = {
+
+      adding: function(val){
+        if(this.root===null){
+          this.root = new BTNode(val);
+          return this;
+        }
+
+        var current=this.root;
+
+        while(current){
+          if(val<=current.val){
+            if(!current.left){
+              current.left = new BTNode(val);
+              return this;
+            }else{
+              current=current.left;
+            }
+          }else{
+            if(!current.right){
+              current.right = new BTNode(val);
+              return this;
+            }else{
+              current=current.right;
+            }
+          }
+        }
+      },
+
+      removeAll: function(){
+        this.root=null;
+        return this;
+      },
+
+      remove: function(val){
+        if(!this.root){
+          return false;
+        }else if(val= this.root.val){
+          var temp= this.root;
+          this.root= this.root.right;
+          var current = this.root;
+
+          if(current){
+            while(current.left){
+              current=current.left;
+            }
+            current.left=temp.left;
+          }
+          temp.left=null;
+          temp.right=null;
+
+          return this;
+
+        }
+        var parent = null;
+        var current = this.root;
+        var found = false;
+
+        while(current){
+          if(val===current.val){
+            found=true;
+            break;
+          }else if(val<current.val){
+            parent=current;
+            current=current.left;
+          }else{
+            parent=current;
+            current=current.right;
+          }
+        }
+
+        if(!found){
+          return false;
+        }
+        if(val<parent.val){
+          parent.left=current.right;
+        }else if(val>parent.val){
+          parent.right=current.right;
+        }
+
+        var temp=current;
+        current=current.right;
+        if(current){
+          while(current.left){
+            current=current.left;
+          }
+          current.left=temp.left;
+        }
+        temp.left=null;
+        temp.right=null;
+
+        return this;
+      }
+
+    }
+
+    tree = new BST();
+    tree.adding(10).adding(2).adding(5).adding(30);
+
+    console.log(tree);
+    console.log(tree.remove(10));
+
+  });
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

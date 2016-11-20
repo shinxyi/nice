@@ -1,0 +1,68 @@
+<html>
+<head>
+  <title>Add</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    function BST(){
+      this.root=null;
+    }
+
+    function BTNode(val){
+      this.val=val;
+      this.left=null;
+      this.right=null;
+    }
+
+    BST.prototype = {
+
+      adding: function(val){
+        if(this.root===null){
+          this.root = new BTNode(val);
+          return this;
+        }
+
+        var current=this.root;
+
+        while(current){
+          if(val<=current.val){
+            if(!current.left){
+              current.left = new BTNode(val);
+              return this;
+            }else{
+              current=current.left;
+            }
+          }else{
+            if(!current.right){
+              current.right = new BTNode(val);
+              return this;
+            }else{
+              current=current.right;
+            }
+          }
+        }
+      },
+
+      isEmpty: function(){
+        return !(this.root) ? true: false;
+      }
+    }
+
+    tree = new BST();
+    tree.adding(10).adding(2).adding(5).adding(30);
+
+    tree2 = new BST();
+
+    console.log(tree.isEmpty());
+    console.log(tree2.isEmpty());
+
+  });
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

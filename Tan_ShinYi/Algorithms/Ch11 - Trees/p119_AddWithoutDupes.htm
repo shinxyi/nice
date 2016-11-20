@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title>Remove and Remove All</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    function BST(){
+      this.root=null;
+    }
+
+    function BTNode(val){
+      this.val=val;
+      this.left=null;
+      this.right=null;
+    }
+
+    BST.prototype = {
+
+      adding: function(val){
+        if(this.root===null){
+          this.root = new BTNode(val);
+          return this;
+        }
+
+        var current=this.root;
+
+        while(current){
+          if(val<=current.val){
+            if(!current.left){
+              current.left = new BTNode(val);
+              return this;
+            }else{
+              current=current.left;
+            }
+          }else{
+            if(!current.right){
+              current.right = new BTNode(val);
+              return this;
+            }else{
+              current=current.right;
+            }
+          }
+        }
+      },
+
+      addWODupes: function(val){
+        if(!this.root){
+          this.root=new BTNode(val);
+          return this;
+        }
+        var current = this.root;
+        var prev = null;
+        while(current){
+          if(val===current.val){
+            return false;
+          }else if(val<current.val){
+            prev=current;
+            current=current.left;
+          }else{
+            prev=current;
+            current=current.right;
+          }
+        }
+        if(val<prev.val){
+          prev.left=new BTNode(val);
+        }else{
+          prev.right=new BTNode(val);
+        }
+
+        return true;
+      }
+
+    }
+
+    tree = new BST();
+    tree.adding(10).adding(2).adding(5).adding(30);
+
+    console.log(tree);
+    console.log(tree.addWODupes(11));
+    console.log(tree);
+    console.log(tree.addWODupes(5));
+
+  });
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<html>
+<head>
+  <title>Stats</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+    function BST(){
+      this.root=null;
+    }
+
+    function BTNode(val){
+      this.val=val;
+      this.left=null;
+      this.right=null;
+    }
+
+    BST.prototype = {
+
+      adding: function(val){
+        if(this.root===null){
+          this.root = new BTNode(val);
+          return this;
+        }
+
+        var current=this.root;
+
+        while(current){
+          if(val<=current.val){
+            if(!current.left){
+              current.left = new BTNode(val);
+              return this;
+            }else{
+              current=current.left;
+            }
+          }else{
+            if(!current.right){
+              current.right = new BTNode(val);
+              return this;
+            }else{
+              current=current.right;
+            }
+          }
+        }
+      },
+
+      size: function(bstNode){ //TO_DO: this isn't working, why????
+      	var left = bstNode.left ? this.size(bstNode.left) : 0 // if there's a left, recurse, else 0
+      	var right = bstNode.right ? this.size(bstNode.right) : 0 //if there's a right, recurse, else 0
+      	return left + right + 1; //return all values under this node and 1(to count for itself)
+      },
+
+      stats: function(){
+        var stats = {size: 0, min: null, max: null};
+        if(!this.root){
+          return stats;
+        }
+
+        var current = this.root;
+        stats.min = current.val;
+        stats.max=current.val;
+
+        return rStats(current, stats);
+
+        function rStats(current, stats){
+          if(!current){
+            return stats;
+          }
+          stats.size++;
+          if(stats.max<current.val){
+            stats.max = current.val;
+          }
+          if(stats.min>current.val){
+            stats.min = current.val;
+          }
+          rStats(current.left, stats);
+          rStats(current.right, stats);
+          return stats;
+        }
+      }
+
+    }
+
+    tree = new BST();
+    tree.adding(10).adding(2).adding(5).adding(30);
+
+    tree2 = new BST();
+
+    console.log(tree.stats(tree));
+    console.log(tree2.stats(tree));
+
+  });
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

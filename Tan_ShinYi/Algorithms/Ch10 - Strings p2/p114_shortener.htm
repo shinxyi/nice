@@ -1,0 +1,118 @@
+<html>
+<head>
+  <title>Shorter</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  //Given string and desired length, return a mximally readable stirng of that length using this process:
+  //0)Remove any leading or trailing spaces (or conversely, pad on both sides out to the desired length),
+  //1)Captialize each word before removing spaces between words (starting from the back),
+  //2)Remove punctuation, starting from the back,
+  //3)Remove lower-case letters (vowels first), from teh back,
+  //4)Remove upper-case letters, from the back.
+
+  //Given a string "It's a wonderful life, Beth! ", desired outputs for the following lengths are:
+  //33 "  It's a wonderful life, Beth!   "
+  //26 "Its A WonderfulLife,Beth!"
+  //22 "It'sAWonderfulLifeBeth"
+  //17 "ItsAWonderflLfBth"
+  //12 "ItsAWndrflLB"
+  //3 "IAW"
+
+  $(document).ready(function(){
+    function isLowerCase(str) {
+        return (/[a-z]/.test(str));
+    }
+
+    //dL = desired length
+    function changeLength(str, dL){
+      if(dL>str.length){
+        return lengthen(str,dL);
+      }else if(dL===str.length){
+        return str;
+      }
+
+      return shorten(str,dL);
+    }
+
+    function lengthen(str,dL){
+      var delta=(dL-str.length)/2;
+      var d_front=Math.floor(delta);
+      var d_back=Math.ceil(delta);
+      var newStr="";
+      for(var i=0;i<d_front;i++){
+        newStr+=" ";
+      }
+      newStr+=str;
+      for(var i=0;i<d_back;i++){
+        newStr+=" ";
+      }
+      console.log('!!! inside lengthen function', newStr);
+      return newStr;
+    }
+
+    function shorten(str,dL){
+      var delta=str.length-dL;
+      var priority=[];
+      var punctuations=".,:;!'?";
+      var vowel="aeiou";
+
+      for(var i=0;i<str.length;i++){
+        if(str[i]===" "){
+          priority.push(0);
+          if((i+1)<str.length && str[i+1]!=" "){
+            priority.push(5);
+            i++;
+          }
+        }else if(punctuations.includes(str[i])){
+          priority.push(1);
+        }else if(vowel.includes(str[i])){
+          priority.push(2);
+        }else if(isLowerCase(str[i])){
+          priority.push(3);
+        }else{
+          priority.push(4);
+        }
+      }
+      var newStr="";
+      var check=0;
+
+      while (delta>0) {
+        for(var i=str.length-1;i>=0;i--){
+          if(priority[i]===check){
+            priority[i]=-1;
+            delta--;
+            if(delta===0){
+              break;
+            }
+          }
+        }
+        check++;
+      }
+      for(var i=0;i<str.length;i++){
+        if(priority[i]===5){
+          newStr+=str[i].toUpperCase();
+        }else if(priority[i]>-1){
+          newStr+=str[i];
+        }
+      }
+      return newStr;
+    }
+
+    //Test case below:
+    console.log(changeLength("It's a wonderful life, Beth! ", 50));
+    console.log(changeLength("It's a wonderful life, Beth! ", 26));
+    console.log(changeLength("It's a wonderful life, Beth! ", 22));
+    console.log(changeLength("It's a wonderful life, Beth! ", 17));
+    console.log(changeLength("It's a wonderful life, Beth! ", 12));
+    console.log(changeLength("It's a wonderful life, Beth! ", 3));
+
+  });
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+<head>
+  <title>Reverse Word Order</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  //Create a function that, given a stirng of words(with spaces), returns new string with words
+  //in reverse sequence. Given 'This is a test', return 'test a is This'.
+
+  //TO_DO: Bonus, handle punctuation and capitalization. Example: given
+  //"Life is not a drill, go for it!" return "It for go, drill a not is life!"
+
+  $(document).ready(function(){
+    function reverseOrder(str){
+      var arr=[];
+      var newStr="";
+
+      for(var i=0;i<str.length;i++){
+        if(str[i]===" "){
+          arr.push(newStr);
+          newStr="";
+        }else{
+          newStr += str[i];
+        }
+      }
+      arr.push(newStr);
+      newStr="";
+
+      for(var i=arr.length-1;i>=0;i--){
+        newStr+=arr[i];
+        newStr+=" ";
+      }
+      return newStr;
+    }
+    //Test case below:
+    console.log(reverseOrder('This is a test'));
+
+  });
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>
