@@ -1,0 +1,60 @@
+<style>
+  table{
+    text-align: right;
+  }
+</style>
+
+<div class="panel panel-default col-md-6">
+  <div class="panel-body">
+    <h2>Login</h2>
+    <div ng-if="errors">
+      <ul>
+        <li ng-repeat="err in errors">{{ err }}</li>
+      </ul>
+    </div>
+
+    <form ng-submit= 'login()'>
+      Email: <input type='email' ng-model='info.email' />
+      Password:<input type='password' ng-model='info.password' />
+      <button type='submit' class="btn btn-default">Login!</button>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default col-md-6">
+  <div class="panel-body">
+    <h1>Register</h1>
+    <div ng-if="errors2">
+      <ul>
+        <li ng-repeat="err2 in errors2">{{ err2 }}</li>
+      </ul>
+    </div>
+
+    <form ng-submit= 'reg()'>
+      <table>
+        <tbody>
+          <tr>
+            <td>Username</td>
+            <td><input type='text' ng-model='regInfo.username' /></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td><input type='email' ng-model='regInfo.email' /></td>
+          </tr>
+          <tr>
+            <td>Password</td>
+            <td><input type='password' ng-model='regInfo.password' /></td>
+          </tr>
+          <tr>
+            <td>Confirm Password</td>
+            <td><input type='password' ng-model='regInfo.password2' /></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><button type='submit' class="btn btn-default">Register!</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

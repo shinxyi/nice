@@ -1,0 +1,69 @@
+<style>
+  input, textarea{
+    width: 300px;
+  }
+
+  textarea{
+    height: 150px;
+  }
+</style>
+
+<a ng-click="logout()">logout</a>
+
+<h1>Welcome, {{user}} </h1>
+
+<input type="text" ng-model="filter" placeholder="Search..."/><br />
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Topic</th>
+      <th>UserName</th>
+      <th>Posts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="topic in topics | filter:filter | orderBy:createdAt:true">
+      <td> {{ topic.category }} </td>
+      <td> <a href="#/topic/{{topic._id}}">{{ topic.topic }}</a></td>
+      <td> <a href="#/user/{{topic.userId}}">{{ topic.username }}</a></td>
+      <td> {{ topic.posts.length }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<br/>
+<h3>Add a new topic!</h3>
+<div ng-if="errors">
+  <ul>
+    <li ng-repeat="err in errors">{{ err }}</li>
+  </ul>
+</div>
+
+<form ng-submit= 'newTopic()'>
+  <table>
+    <tbody>
+      <tr>
+        <td>Topic:</td>
+        <td><input type='text' ng-model='info.topic' /></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><textarea ng-model='info.description'></textarea>
+      </tr>
+      <tr>
+        <td>Category</td>
+        <td>
+          <select ng-model='info.category'>
+            <option ng-repeat="category in categorys" value="{{category.name}}">{{category.name}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button type='submit' class="btn btn-default">Add!</button></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
